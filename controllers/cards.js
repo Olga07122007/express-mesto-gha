@@ -6,7 +6,7 @@ const { ERROR_CODE_REQUEST, ERROR_CODE_NOTFOUND, ERROR_CODE_DEFAULT } = require(
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send(card))
+    .then((card) => res.send(card._id))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки' });
