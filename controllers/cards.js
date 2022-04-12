@@ -30,7 +30,7 @@ module.exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.id)
     .then((card) => {
       if (card) {
-        res.send(card);
+        res.status(200).send({ data: card });
       } else {
         res.status(ERROR_CODE_NOTFOUND).send({ message: 'Передан несуществующий _id карточки' });
       }
@@ -55,7 +55,7 @@ module.exports.likeCard = (req, res) => {
     .populate('likes')
     .then((card) => {
       if (card) {
-        res.send(card);
+        res.status(200).send({ data: card });
       } else {
         res.status(ERROR_CODE_NOTFOUND).send({ message: 'Передан несуществующий _id карточки' });
       }
@@ -84,7 +84,7 @@ module.exports.dislikeCard = (req, res) => {
     .populate('likes')
     .then((card) => {
       if (card) {
-        res.send(card);
+        res.status(200).send({ data: card });
       } else {
         res.status(ERROR_CODE_NOTFOUND).send({ message: 'Передан несуществующий _id карточки' });
       }
