@@ -11,6 +11,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb');
 // парсер
 const bodyParser = require('body-parser');
 
+const { ERROR_CODE_NOTFOUND } = require('./utils/constants');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -26,6 +28,10 @@ app.use((req, res, next) => {
 app.use('/users', require('./routes/users'));
 
 app.use('/cards', require('./routes/cards'));
+
+app.use('/*', (req, res) => {
+  res.status(ERROR_CODE_NOTFOUND).send({ message: 'Страница по указанному маршруту не найдена' });
+});
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
