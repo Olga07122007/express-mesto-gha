@@ -6,7 +6,13 @@ const { ERROR_CODE_REQUEST, ERROR_CODE_NOTFOUND, ERROR_CODE_DEFAULT } = require(
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send({ cardID: card._id }))
+    .then((card) => {
+      if (card) {
+        res.status(200).send({ data: card });
+      } else {
+        res.status(ERROR_CODE_NOTFOUND).send({ message: 'Что-то пошло не так' });
+      }
+    })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(ERROR_CODE_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки' });
