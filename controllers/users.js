@@ -58,7 +58,11 @@ module.exports.updateUser = (req, res) => {
     },
   )
     .then((user) => {
-      res.send(user);
+      if (user) {
+        res.send(user);
+      } else {
+        res.status(ERROR_CODE_NOTFOUND).send({ message: 'Переданы некорректные данные при обновлении профиля' });
+      }
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -89,7 +93,11 @@ module.exports.updateAvatar = (req, res) => {
     },
   )
     .then((user) => {
-      res.send(user);
+      if (user) {
+        res.send(user);
+      } else {
+        res.status(ERROR_CODE_NOTFOUND).send({ message: 'Переданы некорректные данные при обновлении аватара' });
+      }
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
