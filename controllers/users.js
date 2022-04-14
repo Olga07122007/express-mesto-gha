@@ -45,20 +45,19 @@ module.exports.createUser = (req, res) => {
 // обновить профиль
 module.exports.updateUser = (req, res) => {
   const { name, about } = req.body;
+  if ((!about) || (!name)) {
+    res.status(ERROR_CODE_REQUEST).send({ message: 'Переданы некорректные данные при обновлении профиля' });
+    return;
+  }
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
     {
       new: true,
       runValidators: true,
-      upsert: true,
     },
   )
     .then((user) => {
-      if ((!about) || (!name)) {
-        res.status(ERROR_CODE_REQUEST).send({ message: 'Переданы некорректные данные при обновлении профиля' });
-        return;
-      }
       res.send(user);
     })
     .catch((err) => {
@@ -67,7 +66,7 @@ module.exports.updateUser = (req, res) => {
         return;
       }
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_NOTFOUND).send({ message: 'Пользователь с указанным _id не найден' });
+        res.status(ERROR_CODE_REQUEST).send({ message: 'Передан некорректный _id при обновлении профиля' });
         return;
       }
       res.status(ERROR_CODE_DEFAULT).send({ message: 'На сервере произошла ошибка' });
@@ -77,20 +76,19 @@ module.exports.updateUser = (req, res) => {
 // обновить аватар
 module.exports.updateAvatar = (req, res) => {
   const { avatar } = req.body;
+  if (!avatar) {
+    res.status(ERROR_CODE_REQUEST).send({ message: 'Переданы некорректные данные при обновлении аватара' });
+    return;
+  }
   User.findByIdAndUpdate(
     req.user._id,
     { avatar },
     {
       new: true,
       runValidators: true,
-      upsert: true,
     },
   )
     .then((user) => {
-      if (!avatar) {
-        res.status(ERROR_CODE_REQUEST).send({ message: 'Переданы некорректные данные при обновлении аватара' });
-        return;
-      }
       res.send(user);
     })
     .catch((err) => {
@@ -99,7 +97,7 @@ module.exports.updateAvatar = (req, res) => {
         return;
       }
       if (err.name === 'CastError') {
-        res.status(ERROR_CODE_NOTFOUND).send({ message: 'Пользователь с указанным _id не найден' });
+        res.status(ERROR_CODE_REQUEST).send({ message: 'Передан некорректный _id при обновлении аватара' });
         return;
       }
       res.status(ERROR_CODE_DEFAULT).send({ message: 'На сервере произошла ошибка' });
