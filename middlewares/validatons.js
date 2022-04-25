@@ -30,7 +30,10 @@ module.exports.updateUserValidation = celebrate({
 // обновить аватар
 module.exports.updateAvatarValidation = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required(),
+    avatar: Joi.string().required()
+      .regex(
+        /^((http|https):\/\/)?(www\.)?([a-zа-я0-9]{1}[a-zа-я0-9-\\]*\.?)*\.{1}[a-zа-я0-9-]{2,8}(\w-\.~:\/?#\[\]@!$&'\(\)*\+,;=)?/i,
+      ),
   }),
 });
 
