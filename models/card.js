@@ -10,6 +10,13 @@ const cardSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator: (v) => {
+        const regex = /^((http|https):\/\/)?(www\.)?([a-zа-я0-9]{1}[a-zа-я0-9-\\]*\.?)*\.{1}[a-zа-я0-9-]{2,8}(\w-\.~:\/?#\[\]@!$&'\(\)*\+,;=)?/gi;
+        return regex.test(v);
+      },
+      message: 'Некорректный формат ссылки',
+    },
   },
   owner: {
     type: ObjectId,

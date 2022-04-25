@@ -4,7 +4,7 @@
   "description": "[![Tests for sprint 13](https://github.com/Olga07122007/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/Olga07122007/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests for sprint 14](https://github.com/Olga07122007/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/Olga07122007/express-mesto-gha/actions/workflows/tests-14-sprint.yml)\r # Проект Mesto фронтенд + бэкенд",
   "main": "index.js",
   "scripts": {
-		"start": "node app.js",
+    "start": "node app.js",
     "lint": "npx eslint .",
     "dev": "nodemon app.js"
   },
@@ -26,8 +26,12 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
     "express": "^4.17.3",
-    "mongoose": "^6.2.10"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.10",
+    "validator": "^13.7.0"
   }
 }
