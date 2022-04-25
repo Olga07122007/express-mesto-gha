@@ -31,8 +31,8 @@ app.use('/cards', auth, require('./routes/cards'));
 
 app.use('/users', auth, require('./routes/users'));
 
-app.use('/*', () => {
-  throw new NotFoundError('Страница по указанному маршруту не найдена');
+app.use('*', auth, (req, res, next) => {
+  next(new NotFoundError('Страница по указанному маршруту не найдена'));
 });
 
 // обработчик ошибок celebrate
