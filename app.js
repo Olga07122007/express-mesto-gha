@@ -6,6 +6,8 @@ const { errors } = require('celebrate');
 
 const bodyParser = require('body-parser');
 
+const cookieParser = require('cookie-parser');
+
 const { login, createUser } = require('./controllers/users');
 
 const auth = require('./middlewares/auth');
@@ -21,6 +23,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // роуты, не требующие авторизации
 app.post('/signin', loginValidation, login);
