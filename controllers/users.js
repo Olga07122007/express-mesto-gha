@@ -71,14 +71,15 @@ module.exports.createUser = (req, res, next) => {
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
-            next(new BadRequestError('Переданы некорректные данные при создании пользователя2'));
+            next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
           }
           if (err.code === 11000) {
             next(new ConflictError('Данный email уже существует'));
           }
           next(err);
         });
-    });
+    })
+    .catch(next);
 };
 
 // обновить профиль
@@ -105,9 +106,6 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
-      }
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Передан некорректный _id при обновлении профиля'));
       }
       next(err);
     });
@@ -138,9 +136,6 @@ module.exports.updateAvatar = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении аватара'));
       }
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Передан некорректный _id при обновлении аватара'));
-      }
       next(err);
     });
 };
@@ -169,9 +164,6 @@ module.exports.getMe = (req, res, next) => {
       }
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Некорректно указан _id пользователя'));
-      }
       next(err);
     });
 };

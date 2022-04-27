@@ -43,17 +43,16 @@ module.exports.deleteCard = (req, res, next) => {
         if (!card.owner.equals(ownerId)) {
           throw new ForbiddenError('Чужая карточка не может быть удалена!');
         }
-        Card.findByIdAndRemove(req.params.cardId)
+        return Card.findByIdAndRemove(req.params.cardId)
           .then(() => {
             res.status(200).send({ data: card });
           });
-      } else {
-        throw new NotFoundError('Передан несуществующий _id карточки');
       }
+      throw new NotFoundError('Передан несуществующий _id карточки');
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Карточка с указанным _id не найдена'));
+        next(new BadRequestError('Передан некорректный _id карточки'));
       }
       next(err);
     });
